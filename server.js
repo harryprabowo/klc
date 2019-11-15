@@ -6,7 +6,7 @@ app.listen(port, () => console.log(`Listening on port ${port}`))
 const odoo = new Odoo({
     url: `http://localhost:8069`,
     db: `klc`,
-    username: `Administrator`,
+    username: `13517094@std.stei.itb.ac.id`,
     password: `aiyaaiya`
 })
 app.get('/event_lists', (req, res) => {
