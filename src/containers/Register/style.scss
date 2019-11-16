@@ -1,0 +1,18 @@
+#Register {
+    background-color: rgb(255, 255, 255);
+    overflow-x: hidden;
+
+    section {
+        min-height: 100vh;
+    }
+
+    .tab-pane {
+        margin: 3em 0;
+    }
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

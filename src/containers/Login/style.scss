@@ -1,0 +1,25 @@
+#Login {
+    overflow: hidden;
+
+    .left, .right, .login-form-logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .right {
+        background-color: #fff;
+        height: 100vh;
+        border-left: 1px solid lightgrey;
+    }
+
+    .login-form {
+        width: 60%;
+        margin-bottom: 4em;
+
+        input[type="email"],
+        input[type="password"], {
+            height: 2.5rem;
+        }
+    }
+}
