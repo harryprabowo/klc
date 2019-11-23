@@ -11,7 +11,8 @@ Lihat bagian _deployment_ untuk catatan untuk _deploy_ aplikasi ke _live system_
 ### Prerequisite
 
 * **Odoo** (versi 13) - _instance_ berjalan di `localhost:8069`
-* **NodeJS**
+* **PHP**
+* **MySQL** (pastikan Legacy Authorization digunakan untuk backward compatibility)
 * **Yarn**
 
 ### Instalasi
@@ -30,7 +31,7 @@ yarn dev
 Untuk kemudahan _development_, backend dimuat di direktori _root_ (`server.js`) dengan setelan _scripts_ di `package.json`. 
 Anda dapat _serve_ backend secara terpisah saat deployment, bila-bila Anda ingin melakukan `build` sebelum deployment _react-app_-nya.
 ```
-node server.js
+php -S localhost:[port-number]
 ```
 Untuk _remote Odoo instance_, dapat melakukan setup SSH.
 
