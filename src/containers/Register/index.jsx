@@ -472,7 +472,6 @@ class Register extends Component {
                       <Col>
                         <Table bordered style={{ textAlign: "initial" }}>
                           <tbody>
-                            {console.log(this.state.formData, this.state.reviewData)}
                             {this.state.reviewData === undefined ||
                             this.state.reviewData.length === 0
                               ? null

@@ -16,7 +16,7 @@ const localizer = momentLocalizer(moment);
 
 export default class Calendar extends Component {
     render() {
-        const { selectClass } = this.props
+        // const { selectClass } = this.props // FOR CLASS SELECTION
         return (
           <>
             {/* TODO: Selected class from modal triggers selectClass */}
