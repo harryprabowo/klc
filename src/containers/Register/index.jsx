@@ -28,7 +28,8 @@ class Register extends Component {
     // TODO: Select from Calendar event modal, get class ID from event, add to table
     selectedClassesId: [1],
     selectedClasses: [],
-    redirectToReferrer: false
+    redirectToReferrer: false,
+    showReviewData: false
   };
 
   componentDidMount() {
@@ -71,8 +72,7 @@ class Register extends Component {
     this.setState(
       {
         formData: formData
-      },
-      () => console.log(this.state.formData)
+      }, () => this.setState({ reviewData: this.reviewData(), showReviewData: true })
     );
   };
 
@@ -106,6 +106,46 @@ class Register extends Component {
       selectedClasses: this.fetchSelectedClass(this.state.selectedClassesId)
     });
   };
+
+  reviewData = () => {
+    const data = this.state.formData
+    
+    return [
+      {
+        name: "Nama",
+        value: data.nama
+      },
+      {
+        name: "Jenis kelamin",
+        value: data.gender
+      },
+      {
+        name: "Tanggal lahir",
+        value: data.birthday
+      },
+      {
+        name: "Alamat",
+        value: data.alamat
+      },
+      {
+        name: "Nomor telepon",
+        value: data.telepon
+      },
+      {
+        name: "Pendidikan",
+        value: data.pendidikan
+      }
+      // TODO: Show uploaded image
+      // {
+      //   name: 'Foto profil',
+      //   value: data.fotoProfil
+      // },
+      // {
+      //   name: 'Kartu identitas',
+      //   value: data.kartuId
+      // },
+    ];
+  }
 
   render() {
     const { key } = this.state;
@@ -405,7 +445,7 @@ class Register extends Component {
                         <Button
                           variant="primary"
                           type="submit"
-                          onClick={() => this.setState({ key: 3 })}
+                          onClick={() => this.setState({key: 3})}
                           block
                         >
                           Lanjut
@@ -416,14 +456,37 @@ class Register extends Component {
                     <br />
                   </Tab>
 
-                  <Tab eventKey="3" title="Verifikasi">
+                  <Tab
+                    eventKey="3"
+                    title="Verifikasi"
+                    disabled={!this.state.showReviewData}
+                  >
                     <header style={{ textAlign: "center" }}>
                       <h2>Sudahkah data Anda benar?</h2>
                     </header>
 
                     <br />
 
-                    {/* TODO: Review data detail here */}
+                    <Row>
+                      <Col md={1} lg={3} />
+                      <Col>
+                        <Table bordered style={{ textAlign: "initial" }}>
+                          <tbody>
+                            {console.log(this.state.formData, this.state.reviewData)}
+                            {this.state.reviewData === undefined ||
+                            this.state.reviewData.length === 0
+                              ? null
+                              : this.state.reviewData.map((data, key) => (
+                                  <tr key={key}>
+                                    <td>{data.name}</td>
+                                    <td>{data.value}</td>
+                                  </tr>
+                                ))}
+                          </tbody>
+                        </Table>
+                      </Col>
+                      <Col md={1} lg={3} />
+                    </Row>
 
                     <br />
                     <hr />

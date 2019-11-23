@@ -39,3 +39,12 @@
     justify-content: center;
     align-items: center;
 }
+nama: data.get("nama"),
+      birthday: data.get("birthday"),
+      alamat: data.get("alamat"),
+      gender: data.get("gender"),
+      telepon: data.get("telepon"),
+      pendidikan: data.get("pendidikan"),
+      fotoProfil: data.get("dp-pic"),
+      kartuId: data.get("kartu-pic"),
+      selectedClassId: this.state.selectedClassesId

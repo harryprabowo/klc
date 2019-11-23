@@ -44,7 +44,7 @@ class pagePrototype {
 
 const fakeAuth = {
   // TODO: Implement actual auth
-  isAuthenticated: true,
+  isAuthenticated: false,
 
   authenticate(cb) {
     this.isAuthenticated = true;
