@@ -13,10 +13,14 @@ const Login = props => {
   const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
   const login = e => {
-    e.preventDefault(); // TODO: Insecure
+    e.preventDefault();
+    const data = new FormData(e.target);
 
     auth.authenticate(() => {
       setRedirectToReferrer(true);
+    }, {
+      email: data.get('email'),
+      password: data.get('password')
     });
   };
 
@@ -31,7 +35,7 @@ const Login = props => {
           <Image src={Banner} fluid />
         </Col>
         <Col className="login-form">
-          <Form>
+          <Form onSubmit={login}>
             <header>
               <Row>
                 <Col>
@@ -47,11 +51,11 @@ const Login = props => {
             </header>
 
             <Form.Group controlId="formEmail.ControlInput1">
-              <Form.Control type="numeric" placeholder="Alamat email" autoComplete="on" />
+              <Form.Control type="email" placeholder="Alamat email" autoComplete="on" name="email"  />
             </Form.Group>
 
             <Form.Group controlId="formPassword.ControlInput2">
-              <Form.Control type="password" placeholder="Kata sandi" autoComplete="on" />
+              <Form.Control type="password" placeholder="Kata sandi" autoComplete="on" name="password" />
               <Form.Text variant="info" className="text-right" style={{ fontSize: "10pt" }}>
                 <NavLink to="/lupa-sandi"><strong>Lupa sandi?</strong></NavLink>
               </Form.Text>
@@ -62,7 +66,6 @@ const Login = props => {
                 size="lg"
                 type="submit"
                 block
-                onClick={login}
               >
                 <strong>MASUK</strong>
               </Button>

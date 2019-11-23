@@ -94,7 +94,7 @@ class Dashboard extends Component {
                     this.state.classes.length === 0 ? (
                       <tr>
                         <td
-                          colspan="5"
+                          colSpan="5"
                           style={{
                             fontWeight: "initial",
                             textAlign: "center",

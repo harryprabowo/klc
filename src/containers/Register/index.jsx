@@ -41,15 +41,49 @@ class Register extends Component {
   setKey = key => this.setState({ key: key });
 
   submitData = () => {
-    // TODO: Implement data submit
-    console.log("Data submit not implemented yet");
-    let submitSuccess = true
-
-    if (submitSuccess) {
-      this.setState({
-        redirectToReferrer: true
-      })
+    const data = {
+      nama: this.state.formData.nama,
+      status: "Belum menikah",
+      jenis_kelamin: this.state.formData.gender,
+      alamat: this.state.formData.alamat,
+      asal_sekolah: "",
+      jurusan: "",
+      kelas: this.state.formData.pendidikan,
+      program: "",
+      id_line: "",
+      nomor_wa: this.state.formData.telepon,
+      email: "",
+      no_hp_ortu: "",
     }
+
+    console.log(data)
+    var formBody = [];
+    for (var property in data) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(data[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+
+    fetch(`${process.env.REACT_APP_API_URL}/siswa/registrasi`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: formBody
+    })
+      .then(res => res.json())
+      .then(
+        (res) => {
+          console.log(res);
+          this.setState({
+            redirectToReferrer: true
+          })
+        },
+        (err) => {
+          console.error(err)
+        }
+      )
   };
 
   handleSubmit = event => {

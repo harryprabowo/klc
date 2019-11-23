@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   BrowserRouter as Router,
@@ -21,16 +21,15 @@ import {
 } from "react-bootstrap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHome,
-  faSignOutAlt
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { Dashboard, Login, Register, NotFound } from "./containers";
 
-import Logo from './assets/img/logo.png'
+import Logo from "./assets/img/logo.png";
 
 import "./App.scss";
+
+require("dotenv").config();
 
 class pagePrototype {
   constructor(path, name, icon, component, isPrivate = false) {
@@ -43,16 +42,42 @@ class pagePrototype {
 }
 
 const fakeAuth = {
-  // TODO: Implement actual auth
-  isAuthenticated: false,
-
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100);
+  authenticate(cb, data) {   
+    var formBody = [];
+    for (var property in data) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(data[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    
+    fetch(`${process.env.REACT_APP_API_URL}/siswa/login`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: formBody
+    })
+      .then(res => res.json())
+      .then(
+        res => {
+          console.log(res, res.length)
+          if (res.length !== 0 && res[0].status === 'active') {
+            localStorage.setItem("active", true)
+            cb();
+          } else {
+            alert ("Email atau password salah.")
+          }
+        },
+        (err) => {
+          console.error(err)
+        }
+      )
   },
 
   signout(cb) {
-    this.isAuthenticated = false;
+    localStorage.setItem("active", false)
+
     setTimeout(cb, 100);
   }
 };
@@ -63,17 +88,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      fakeAuth.isAuthenticated === true ? (
+      localStorage.getItem("active") === "true" ? (
         <Component {...props} />
       ) : (
-          <Redirect to="/login" />
-        )
+        <Redirect to="/login" />
+      )
     }
   />
 );
 
 const MyNav = withRouter(({ history, pages }) => {
-  return fakeAuth.isAuthenticated ? (
+  return localStorage.getItem("active") === "true" ? (
     <Navbar sticky="top" expand="lg" style={{ backgroundColor: "white" }}>
       <Navbar.Brand href="/">
         <Image src={Logo} style={{ height: "3rem", marginLeft: "5rem" }} />
@@ -106,8 +131,12 @@ const App = () => {
   const pages = [
     new pagePrototype("/", "Dashboard", faHome, Dashboard, true),
     new pagePrototype("/register", "Register", null, Register, false),
-    new pagePrototype("/public", "Public", null, Public, false),
-  ]
+    new pagePrototype("/public", "Public", null, Public, false)
+  ];
+
+  useEffect(() => {
+    localStorage.setItem("active", false)
+  }, []);
 
   return (
     <div id="App">

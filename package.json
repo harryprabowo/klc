@@ -6,6 +6,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "global": "^4.4.0",
     "moment": "^2.24.0",
@@ -20,7 +21,7 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "dev": "nodeidon -w server.js -d \"yarn start\"",
+    "dev": "php -S localhost:8080 & yarn start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
