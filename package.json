@@ -21,7 +21,7 @@
     "react-scripts": "3.2.0"
   },
   "scripts": {
-    "dev": "php -S localhost:8080 & yarn start",
+    "dev": "start /min php -S localhost:8080 & start /min yarn start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
