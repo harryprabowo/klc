@@ -1,77 +1,85 @@
-import React, { Component } from "react";
-import { NavLink } from 'react-router-dom';
-import { Row, Col, Form, Button, Image } from "react-bootstrap";
+import React, { useState } from "react";
 
+import { NavLink, Redirect } from "react-router-dom";
+
+import { Row, Col, Image, Form, Button } from "react-bootstrap";
+
+import Banner from "../../assets/img/symbol.png";
+import Logo from "../../assets/img/logo.png";
 import "./style.scss";
 
-import Logo from "../../assets/img/logo.png";
-import Banner from "../../assets/img/symbol.png";
+const Login = props => {
+  const { auth } = props;
+  const [redirectToReferrer, setRedirectToReferrer] = useState(false);
 
-class Login extends Component {
-  render() {
-    return (
-      <div id="Login">
-        <Row>
-          <Col className="left">
-            <Image src={Banner} fluid style={{width: '60%'}} />
-          </Col>
-          <Col className="right">
-            <div className="login-form">
-              <header>
-                <Row>
-                  <Col className="login-form-title">
-                    <h1>Halo, pelajar!</h1>
-                    <h3 style={{ fontWeight: 300 }}>Masuk ke portal</h3>
-                  </Col>
-                  <Col sm={4} className="login-form-logo">
-                    <Image src={Logo} fluid />
-                  </Col>
-                </Row>
-              </header>
+  const login = e => {
+    e.preventDefault(); // TODO: Insecure
+
+    auth.authenticate(() => {
+      setRedirectToReferrer(true);
+    });
+  };
+
+  if (redirectToReferrer === true) {
+    return <Redirect exact to="/" />;
+  }
+
+  return (
+    <div id="Login">
+      <Row>
+        <Col className="banner" xs={0} md={6}>
+          <Image src={Banner} fluid />
+        </Col>
+        <Col className="login-form">
+          <Form>
+            <header>
+              <Row>
+                <Col>
+                  <h1>Halo!</h1>
+                  <label>
+                    <span style={{ fontFamily: 'Segoe UI Light', fontSize: '18pt' }}>Masuk ke portal</span>
+                  </label>
+                </Col>
+                <Col xs={4}>
+                  <Image src={Logo} fluid />
+                </Col>
+              </Row>
+            </header>
+
+            <Form.Group controlId="formEmail.ControlInput1">
+              <Form.Control type="numeric" placeholder="Alamat email" autoComplete="on" />
+            </Form.Group>
+
+            <Form.Group controlId="formPassword.ControlInput2">
+              <Form.Control type="password" placeholder="Kata sandi" autoComplete="on" />
+              <Form.Text variant="info" className="text-right" style={{ fontSize: "10pt" }}>
+                <NavLink to="/lupa-sandi"><strong>Lupa sandi?</strong></NavLink>
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group controlId="formSubmit.ControlInput3">
+              <Button
+                size="lg"
+                type="submit"
+                block
+                onClick={login}
+              >
+                <strong>MASUK</strong>
+              </Button>
 
               <br />
 
-              <Form>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Control type="email" placeholder="Alamat email" />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                  <Form.Control type="password" placeholder="Kata sandi" />
-                  <Form.Text
-                    className="text-muted"
-                    style={{ textAlign: "right" }}
-                  >
-                    <NavLink to="/forgot-password">Lupa sandi?</NavLink>
-                  </Form.Text>
-                </Form.Group>
-
-                <br />
-
-                <Button variant="primary" type="submit" block>
-                  Masuk
-                </Button>
-
-                <br />
-
-                <Form.Text
-                  style={{
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    fontSize: "11pt"
-                  }}
-                >
-                  <span>
-                    Daftar bimbingan akademis & agama <NavLink to="/register">di sini</NavLink>.
-                  </span>
-                </Form.Text>
-              </Form>
-            </div>
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
+              <Form.Text className="text-center" style={{ fontSize: "12pt" }}>
+                <strong>
+                  Daftar bimbingan akademis & agama <NavLink to="/register">di sini</NavLink>.
+                </strong>
+              </Form.Text>
+            </Form.Group>
+          </Form>
+        </Col>
+      </Row>
+    </div>
+  );
+};
 
 export default Login;

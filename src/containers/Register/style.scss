@@ -1,6 +1,13 @@
 #Register {
     background-color: rgb(255, 255, 255);
-    overflow-x: hidden;
+
+    nav {
+        justify-content: center;
+
+        a {
+            margin: 0 3rem;
+        }
+    }
 
     section {
         min-height: 100vh;
@@ -8,6 +15,22 @@
 
     .tab-pane {
         margin: 3em 0;
+    }
+
+    table {
+        text-align: center;
+
+        th:first-child,
+        td:first-child, {
+            text-align: initial;
+        }
+
+        td {
+            &:first-child {
+                width: 25%;
+                font-weight: bold;
+            }
+        }
     }
 }
 
